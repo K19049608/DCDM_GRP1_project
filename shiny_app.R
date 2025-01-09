@@ -157,7 +157,6 @@ server = function(input, output, session) {
   data_fig1$ptrans = (1-data_fig1$p_value)^8
   
   
-  # Figure 2 Data prep
   # Gene combined is dropped as it is not used in figure 2
   data_fig2 = df_grouped %>% select(-c(gene_combined))
   
@@ -247,7 +246,6 @@ server = function(input, output, session) {
     # Uses dimensions of the labeling data for number of traces, as there may be values removed
   })
   
-  # The rest of your server code for Figures 2 and 3 remains unchanged
   
   # Reactive expression for Figure 2 (Scatter Plot)
   output$scatter_plot = renderPlotly({
