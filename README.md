@@ -23,36 +23,39 @@ install.packages('RMySQL')
 
 # **Clean the Data**
 
-## Run the data_collation.R to get the collated_raw_data.csv
+Run the data_collation.R to get the collated_raw_data.csv
 
-## Run the analysis_data_cleaning.Rmd to get the analysis_data_clean.csv
+Run the analysis_data_cleaning.Rmd to get the analysis_data_clean.csv
 
-## Run the Disease_info_cleaning.R to get Disease_information_clean.csv
+Run the Disease_info_cleaning.R to get Disease_information_clean.csv
 
-## Run the procedure_cleaning.R to get IMPC_procedure_clean.csv
+Run the procedure_cleaning.R to get IMPC_procedure_clean.csv
 
-## Run the parameter_dRunescription_cleaning.Rmd to get IMPC_parameter_description_clean.csv
+Run the parameter_dRunescription_cleaning.Rmd to get
+IMPC_parameter_description_clean.csv
 
 # **Add parameters (Optional)**
 
-## Run unique_parameters.R to get unique_parameters.csv
+Run unique_parameters.R to get unique_parameters.csv
 
-## Run parameter_grouping.R with parameters_to_groups.csv to get analysis_data_grouped
+Run parameter_grouping.R with parameters_to_groups.csv to get
+analysis_data_grouped
 
 This step is not required for database creation, it is needed if you
 want to create the Shiny app from a csv.
 
 # **Create the SQL database**
 
-## Run database_cleaning.R to get analysis_table.csv, parameter_table.csv, gene_table.csv,
+Run database_cleaning.R to get analysis_table.csv, parameter_table.csv,
+gene_table.csv, procedures_table.csv, diseaseGene_table.csv,
+disease_table.csv, group_list.csv
 
-procedures_table.csv, diseaseGene_table.csv, disease_table.csv,
-group_list.csv
+Run Sql_db_creation.sql to create the database
 
-## Run Sql_db_creation.sql to create the database
+To query the database in R - use SQL_to_R.Rmd
 
 # **R Shiny **
 
-## Run the shiny_app.R!
+Run the shiny_app.R!
 
-### To query the database in R - use SQL_to_R.Rmd
+To query the database in R - use SQL_to_R.Rmd
