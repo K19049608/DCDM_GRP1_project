@@ -19,6 +19,8 @@ install.packages('umap')
 install.packages('metap')
 install.packages('packcircles')
 install.packages('RMySQL')
+# RMariaDB also works if RMySQL does not work for you or if you want to use the more updated version as RMySQL is a legacy package
+install.packages('RMariaDB')
 ```
 
 # **Clean the Data**
