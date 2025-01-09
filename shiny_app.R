@@ -8,7 +8,7 @@ library(packcircles)
 library(RMySQL)
 
 #connect to SQL database, unfortunately you will need to hard code your login details
-DCDM_project = dbConnect(RMySQL::MySQL(), dbname = 'DCDM_project', username = 'your_username', password = 'your_password')
+DCDM_project = dbConnect(RMySQL::MySQL(), dbname = 'database1', username = 'group1', password = 'FmBclv5T')
 
 # Load the data
 df = dbGetQuery(DCDM_project, "SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_id,impcParameterOrigId FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id") 
