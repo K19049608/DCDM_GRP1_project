@@ -55,10 +55,10 @@ disease_table.csv, group_list.csv
 
 Run Sql_db_creation.sql to create the database
 
-To query the database in R - use SQL_to_R.Rmd
+To query the database in R - follow instructions in SQL_to_R.Rmd
 
 # **R Shiny**
 
-Run the shiny_app.R!
+Run the shiny_app.R! Make sure your MySQL login details are added into the code
 
-To query the database in R - use SQL_to_R.Rmd
+To query the database in R - follow instructions in SQL_to_R.Rmd
