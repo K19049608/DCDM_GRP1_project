@@ -54,7 +54,7 @@ Run Sql_db_creation.sql to create the database
 
 To query the database in R - use SQL_to_R.Rmd
 
-# **R Shiny **
+# **R Shiny**
 
 Run the shiny_app.R!
 
