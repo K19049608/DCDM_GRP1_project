@@ -19,6 +19,9 @@ install.packages('umap')
 install.packages('metap')
 install.packages('packcircles')
 install.packages('RMySQL')
+#RMySQL is a legacy package, RMariaDB is the updated package
+#Both RMySQL or RMariaDB work, so you can choose which to use
+install.packages('RMariaDB')
 ```
 
 # **Clean the Data**
@@ -31,7 +34,7 @@ Run the Disease_info_cleaning.R to get Disease_information_clean.csv
 
 Run the procedure_cleaning.R to get IMPC_procedure_clean.csv
 
-Run the parameter_dRunescription_cleaning.Rmd to get
+Run the parameter_description_cleaning.Rmd to get
 IMPC_parameter_description_clean.csv
 
 # **Add parameters (Optional)**
