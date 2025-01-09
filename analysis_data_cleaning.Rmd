@@ -1,0 +1,185 @@
+---
+title: "Data Cleaning"
+output: html_document
+date: "2024-12-09"
+---
+
+# **Cleaning the data**
+### Load the data and libraries
+
+```{r}
+# Load necessary libraries
+library(dplyr)
+library(stringr)
+library(readr)
+
+# Load the data
+collated <- read_csv('collated_raw_data.csv')
+```
+
+## Merging the columns 
+
+For each set of columns with similar names, check the number of NaN values in the main column (The one with the correct name) Replace the NaN values with values from the similarly named column
+
+```{r}
+# Check for NAs in the 'analysis_id' column
+sum(is.na(collated$analysis_id)) # 433 NAs
+
+# Fill NAs in 'analysis_id' with values from 'Analysis_id'
+collated$analysis_id <- ifelse(is.na(collated$analysis_id), collated$Analysis_id, collated$analysis_id)
+sum(is.na(collated$analysis_id)) # After replacement, 0 NAs
+
+# Apply similar logic for other columns
+collated$pvalue <- ifelse(is.na(collated$pvalue), collated$Pvalue, collated$pvalue)
+collated$parameter_name <- ifelse(is.na(collated$parameter_name), collated$Parameter_name, collated$parameter_name)
+collated$parameter_id <- ifelse(is.na(collated$parameter_id), collated$Parameter_id, collated$parameter_id)
+collated$mouse_life_stage <- ifelse(is.na(collated$mouse_life_stage), collated$Mouse_life_stage, collated$mouse_life_stage)
+collated$mouse_strain <- ifelse(is.na(collated$mouse_strain), collated$Mouse_strain, collated$mouse_strain)
+collated$gene_symbol <- ifelse(is.na(collated$gene_symbol), collated$Gene_symbol, collated$gene_symbol)
+collated$gene_accession_id <- ifelse(is.na(collated$gene_accession_id), collated$Gene_accession_id, collated$gene_accession_id)
+
+for (col in names(df)) {
+    print(paste('There are', sum(is.na(df[[col]])), 'NAs in', col))
+  }
+```
+
+## Now that all the columns with similar names are combined, lets clean the data further
+
+Select only the correct columns
+
+```{r}
+df <- collated %>% select(gene_accession_id, gene_symbol, mouse_strain, mouse_life_stage,
+                          parameter_id, pvalue, parameter_name, analysis_id)
+head(df)
+```
+
+First, let's explore the values in the columns, and check how it compares with the SOP provided.
+
+## Mouse strain
+
+Checking wether the mouse_strain values are in accordance with the SOP
+
+# Check unique values in the mouse_strain column
+unique(df$mouse_strain) 
+```{r}
+# Check unique values in the mouse_strain column
+unique(df$mouse_strain) 
+```
+
+As we can see, there are what look like typos in mouse_strain column. According to the SOP, the only possible values are: "C57BL","B6J","C3H","129SV".
+
+Values of "C5.BL" could be presumed to be incorrectly entered C57BL values. It is hence sensible to replace them with C57BL instead.
+
+```{r}
+# Replace typos using regular expressions
+df$mouse_strain <- str_replace_all(df$mouse_strain, "C5\\dBL", "C57BL")
+
+# Check unique values again after correction
+unique(df$mouse_strain)
+```
+
+
+## Mouse life stage
+
+Checking wether the mouse_life_stage values are in accordance with the SOP
+
+
+```{r}
+# Check unique values in the mouse_life_stage column
+unique(df$mouse_life_stage)
+```
+
+
+##Analysis ID
+
+Checking wether the analysis_id values are in accordance with the SOP
+
+They have to be of length 15
+They have to be unique
+
+```{r}
+# Check the length of analysis_id
+unique(nchar(df$analysis_id))
+
+# Check for duplicate analysis_id values
+sum(duplicated(df$analysis_id))
+```
+
+##Gene Accession ID
+
+Checking wether the gene_accession_id values are in accordance with the SOP
+
+Min length - 9; Max length - 11
+Example value: MGI:2679336
+
+```{r}
+# Check the length of gene_accession_id
+unique(nchar(df$gene_accession_id))
+
+# Check if the values start with 'MGI:'
+sum(!str_starts(df$gene_accession_id, "MGI:"))
+```
+
+##Gene Symbol
+
+Checking whether the gene_symbol values are in accordance with the SOP
+
+Min length 1; Max length: 13
+```{r}
+# Check the length of gene_symbol
+unique(nchar(df$gene_symbol))
+
+# Check if the gene_accession_ids are unique to the gene_symbols
+unique_symbols <- df %>%
+  group_by(gene_accession_id) %>%
+  summarize(unique_symbols = n_distinct(gene_symbol)) %>%
+  filter(unique_symbols > 1)
+
+# View the results
+print(unique_symbols)
+
+# Some Gene symbols are attributed to the same gene ID, however have the different capitalization
+# To fix it, we will convert the gene_symbol to all upper case 
+
+df$gene_symbol = toupper(df$gene_symbol)
+```
+
+##Parameter ID
+
+Checking wether the parameter_id values are in accordance with the SOP
+
+Min length - 15; Max length - 18
+
+```{r}
+# Check the length of parameter_id
+unique(nchar(df$parameter_id))
+```
+
+##pvalue
+
+Checking wether the parameter_id values are in accordance with the SOP
+
+dtype = float
+max value = 1
+
+```{r}
+# Check if pvalue is of type float
+typeof(df$pvalue)
+
+# Check if there are any p-values greater than 1
+sum(df$pvalue > 1)
+
+# Filter out p-values greater than 1
+df_clean <- df %>% filter(pvalue < 1)
+
+```
+
+## Save the cleaned data 
+
+
+```{r}
+# Save the cleaned data to a CSV file
+write_csv(df_clean, 'clean_analysis_data.csv')
+
+```
+
