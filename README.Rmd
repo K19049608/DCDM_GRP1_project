@@ -1,6 +1,6 @@
 ---
 title: "README"
-output: html_document
+output: github_document
 date: "2025-01-09"
 ---
 # **List of packages to install to run all the scripts**
