@@ -1,0 +1,37 @@
+---
+title: "SQL_to_R"
+output: html_document
+date: "2024-12-28"
+---
+
+Make sure you have the SQL database set up from the DUMP file first.
+
+To do this in MySQL command line terminal, you will need to log in and create a new, empty database, then source the data from the dump file as shown in the following commands.
+
+```{sql connection=}
+CREATE DATABASE database1
+
+USE database1
+
+SOURCE <file_path>/DCDM_GRP1.dump
+```
+
+Now you can set up a connection between MySQL and R
+
+```{r setup, include=FALSE}
+#install package for connecting R to SQL database
+#install.packages("RMariaDB")
+library(RMySQL)
+
+#connect to SQL database, unfortunately you will need to hard code your login details
+DCDM_project <- dbConnect(RMySQL::MySQL(), dbname = 'database1', username = 'your_username', password = 'your_password')
+
+#list all tables in the database
+dbListTables(DCDM_project)
+#list all fields/columns in a table in the database
+dbListFields(DCDM_project, "group_list")
+
+#query the database and store the output as a dataframe
+analysis_data = dbGetQuery(DCDM_project, "SELECT parameter_group from parameter")
+
+```
