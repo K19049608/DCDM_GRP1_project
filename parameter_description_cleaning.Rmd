@@ -1,0 +1,173 @@
+---
+title: "Parameter_Description_cleaning"
+output: html_document
+date: "2024-12-17"
+---
+
+Load in the libraries and the data
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+path = "filepath/IMPC_parameter_description.txt"
+
+lines <- readLines(path)
+
+
+cleaned_lines <- gsub('"', '', lines)  # Remove all quotes
+
+#The regex matches by ^ - start of line \\d+ - 1+digits (line number), \\s+ space that follows the number and removes the match
+cleaned_lines <- gsub("^\\d+\\s+", "", cleaned_lines)  # Remove the line number part
+
+cleaned_lines <- cleaned_lines[-c(1, 2)] #Remove the wrong header and the "X" line
+
+# Write the cleaned lines to a temporary file
+temp_file <- tempfile()
+writeLines(cleaned_lines, temp_file)
+
+#read the cleaned data into a DataFrame
+df <- read_csv(temp_file, col_names = c("impcParameterOrigId", "name", "description", "parameterID"))
+
+head(df)
+
+```
+# **Cleaning the Data**
+
+## Check for duplicates
+```{r}
+#Count how many duplicate parameter original IDs there are 
+print(sum(duplicated(df$name)))
+
+#Remove the duplicate IDs
+
+df = df[!duplicated(df$impcParameterOrigId),]
+
+#Investigate the large amount of duplicates in the name column (most duplicates)
+duplicate_rows_name = df %>% #Creates a df with all the duplicates that appear in the names column
+  filter(duplicated(name) | duplicated(name, fromLast = TRUE)) %>%
+  select(impcParameterOrigId, name, description)
+
+#First check if there are duplicate names with different (Non-NA) uniqe descritpions 
+duplicate_description_groups = df %>%
+  filter(!is.na(description)) %>%  # Exclude NA descriptions
+  group_by(name) %>%
+  summarise(
+    distinct_descriptions = n_distinct(description),   # Count distinct descriptions
+    unique_descriptions = paste(unique(description), collapse = ", ")  # Combine unique descriptions into a single string
+  ) %>%
+  filter(distinct_descriptions > 1) %>%  # Keep only those with multiple distinct descriptions
+  ungroup()
+
+
+View(duplicate_description_groups)
+
+
+#There are no duplicate values in Names that carry important information, therefore the duplicate names can be removed
+
+
+#Remove the duplicate names, if there are duplicates, where only one of them has an attached description, make sure to keep it over the NA description
+df = df %>%
+  group_by(name) %>%
+  filter(!is.na(description)) %>%  # Remove rows with NA description first
+  arrange(description, .by_group = TRUE) %>%  # Arrange rows alphabetically by description or by frequency
+  slice(1) %>%  # Keep the first occurrence of the description
+  ungroup()
+
+#Investigate the large number of duplicates in the description column
+
+duplicate_rows_description = df %>% #Creates a df with all the duplicates that appear in the names column
+  filter(duplicated(description) | duplicated(description, fromLast = TRUE)) %>%
+  select(impcParameterOrigId, name, description, parameterID)
+
+View(duplicate_rows_description)
+```
+
+## Look through the description column for any unusual values and NAs
+
+The duplicate_rows_description table showed that most of the duplicates are assigned
+to names that are duplicates but have a typo or spelled differently. However there are 2 cases
+where there was an issue with data entry. So let's first adress those, and then remove
+the duplicates and look for any other issues.
+
+```{r}
+library(stringr)
+#Manually fix the rest of the descriptions 
+
+# Fix the wrong duplicate descriptions identified in duplicate_rows_descriptions
+df <- df %>%
+  mutate(description = if_else(impcParameterOrigId == "44868", "responsive_to_tactile_stimuli", description))
+
+# Remove the WBC description rows 
+df = df %>%
+  filter(!str_starts(description, "A white blood cell"))
+
+#Find and fix the rows with shifted data entry Type 1
+shifted = c(30964, 30962, 30961, 52113, 52114, 89695, 52112)
+df = df %>%
+  mutate(
+    name = if_else(
+      impcParameterOrigId %in% shifted, 
+      paste(name, description, str_extract(parameterID,"^[^I]+(?=IMPC)")),# Concatenate name, description, and part of parameterID before "IMPC" 
+      name
+    ),
+    parameterID = if_else(
+      impcParameterOrigId %in% shifted, 
+      str_extract(parameterID,"(IMPC.*)"),  # Remove everything before and including "IMPC"
+      parameterID
+    ),
+      description = if_else(
+      impcParameterOrigId %in% shifted, 
+      str_replace_all(name, " ", "_"),  # If the ID is one of the specified, set description to an empty string
+      description  # Otherwise, keep the original description
+    )
+  )
+
+#Remove the rest of the duplicates
+
+df = df[!duplicated(df$description),]
+
+  
+
+
+
+
+print(sum(is.na(df$description)))
+
+```
+
+## Check the parameterID
+
+Make sure parameterID is aligned with the SOP
+
+```{r}
+#Find and fix the rows with shifted data entry Type 1
+df_filtered <- df[nchar(df$parameterID) > 18, ]
+View(df_filtered)
+
+df_filtered <- df_filtered[!apply(df_filtered, 1, function(x) all(is.na(x))), ]
+ids_shifted = df_filtered$impcParameterOrigId
+
+df = df %>%
+  mutate(
+    description = if_else(
+      impcParameterOrigId %in% ids_shifted, 
+      paste(description,str_extract(parameterID,"^[^,]+(?=,?IMPC)")),  # If the ID is one of the specified, set description to an empty string
+      description  # Otherwise, keep the original description
+    ),
+      parameterID = if_else(
+      impcParameterOrigId %in% ids_shifted, 
+      str_extract(parameterID,"(IMPC.*)"),  # Remove everything before and including "IMPC"
+      parameterID
+    )
+  )
+
+
+# Remove rows where all values are NA
+
+df$description <- gsub(" ", "_", df$description) #Replace all spaces with underscores in description
+
+write.csv(df,"IMPC_parameter_description_clean.csv")
+```
+
