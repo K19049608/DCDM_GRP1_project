@@ -179,7 +179,7 @@ df_clean <- df %>% filter(pvalue < 1)
 
 ```{r}
 # Save the cleaned data to a CSV file
-write_csv(df_clean, 'clean_analysis_data.csv')
+write_csv(df_clean, 'analysis_data_clean.csv')
 
 ```
 
