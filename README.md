@@ -57,6 +57,10 @@ Run Sql_db_creation.sql to create the database
 
 To query the database in R - follow instructions in SQL_to_R.Rmd
 
+# **SQL queries for genotypes of interest**
+
+SQL queries for the 4 genotypes of interest, along with additional alternative queries can be found in SQL_genotype_queries.Rmd
+
 # **R Shiny**
 
 Run the shiny_app.R! Make sure your MySQL login details are added into the code
