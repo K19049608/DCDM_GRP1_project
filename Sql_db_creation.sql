@@ -1,7 +1,7 @@
 -- !preview conn=DBI::dbConnect(RSQLite::SQLite())
 
-CREATE DATABASE DCDM_GRP1;
-USE DCDM_GRP1;
+CREATE DATABASE database1;
+USE database1;
 
 CREATE TABLE Analysis (analysis_id varchar(255) NOT NULL PRIMARY KEY,gene_accession_id varchar(255) NOT NULL,mouse_strain varchar(255),mouse_life_stage varchar(255),parameter_id varchar(255) NOT NULL,pvalue DECIMAL(9,8)NOT NULL);
 LOAD DATA LOCAL INFILE 'filepath/analysis_table.csv' INTO TABLE Analysis FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 LINES;
