@@ -4,6 +4,23 @@ README
 
 # **List of packages to install to run all the scripts**
 
+``` r
+# If for any of the packages the installation doesnt work 
+# try BiocManager::install('package_name')
+
+install.packages('tidyverse')
+install.packages('data.table')
+install.packages('stringr')
+install.packages('readr')
+install.packages('shiny')
+install.packages('shinydashboard')
+install.packages('plotly')
+install.packages('umap')
+install.packages('metap')
+install.packages('packcircles')
+install.packages('RMySQL')
+```
+
 # **Clean the Data**
 
 ## Run the data_collation.R to get the collated_raw_data.csv
