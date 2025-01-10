@@ -61,6 +61,8 @@ To query the database in R - follow instructions in SQL_to_R.Rmd
 
 SQL queries for the 4 genotypes of interest, along with additional alternative queries can be found in SQL_genotype_queries.Rmd
 
+The SQL database can be found on the CREATE HPC in /scratch_tmp/grp/msc_appbio/DCDM_group1/outputs
+
 # **R Shiny**
 
 Run the shiny_app.R! Make sure your MySQL login details are added into the code
