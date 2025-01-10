@@ -39,11 +39,11 @@ Aimp1 MySQL Queries
 ```{sql connection=}
 #this query gets all analysis IDs, Pvalues, gene accession IDs, parameter names, parameter descriptions, parameter IDs, parameterOrigIDs, procedure names and procedure descriptions related to Aimp1
 #disease information is not included as no disease information is linked to Aimp1
-SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Aimp1'
+SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Aimp1';
 
 #this query gets information from every column in the tables, be careful as this does output duplicate ID columns as well. 
 #disease information is not included as no disease information is linked to Aimp1
-SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Aimp1'
+SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.Procedure_id WHERE gene_symbol= 'Aimp1'
 ```
 
 Aimp1 SQL queries into R dataframes
@@ -52,11 +52,11 @@ Aimp1 SQL queries into R dataframes
 #query the database for information related to gene 'Aimp1' and store the output as a dataframe
 #this query gets all analysis IDs, Pvalues, gene accession IDs, parameter names, parameter descriptions, parameter IDs, parameterOrigIDs, procedure names and procedure descriptions related to Aimp1
 #disease information is not included as no disease information is linked to Aimp1
-Aimp1_data = dbGetQuery(database1, "SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Aimp1'") 
+Aimp1_data = dbGetQuery(database1, "SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Aimp1';") 
 
 #this query gets information from every column in the tables, be careful as this does output duplicate ID columns as well. 
 #disease information is not included as no disease information is linked to Aimp1
-Aimp1_data = dbGetQuery(database1, "SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Aimp1'") 
+Aimp1_data = dbGetQuery(database1, "SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Aimp1'") 
 ```
 
 Cachd1 MySQL queries
@@ -64,11 +64,11 @@ Cachd1 MySQL queries
 ```{sql connection=}
 #this query gets all analysis IDs, Pvalues, gene accession IDs, parameter names, parameter descriptions, parameter IDs, parameterOrigIDs, procedure names and procedure descriptions related to Aimp1
 #disease information is not included as no disease information is linked to Cachd1
-SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Cachd1'
+SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Cachd1'
 
 #this query gets information from every column in the tables, be careful as this does output duplicate ID columns as well. 
 #disease information is not included as no disease information is linked to Cachd1
-SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Cachd1'
+SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Cachd1'
 ```
 
 Cachd1 SQL queries into R dataframes
@@ -77,11 +77,11 @@ Cachd1 SQL queries into R dataframes
 #query the database for information related to gene 'Aimp1' and store the output as a dataframe
 #this query gets all analysis IDs, Pvalues, gene accession IDs, parameter names, parameter descriptions, parameter IDs, parameterOrigIDs, procedure names and procedure descriptions related to Aimp1
 #disease information is not included as no disease information is linked to Cachd1
-Cachd1_data = dbGetQuery(database1, "SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Cachd1'") 
+Cachd1_data = dbGetQuery(database1, "SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Cachd1'") 
 
 #this query gets information from every column in the tables, be careful as this does output duplicate ID columns as well. 
 #disease information is not included as no disease information is linked to Cachd1
-Cachd1_data = dbGetQuery(database1, "SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Cachd1'") 
+Cachd1_data = dbGetQuery(database1, "SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Cachd1'") 
 ```
 
 Dkk2 MySQL queries
@@ -89,11 +89,11 @@ Dkk2 MySQL queries
 ```{sql connection=}
 #this query gets all analysis IDs, Pvalues, gene accession IDs, parameter names, parameter descriptions, parameter IDs, parameterOrigIDs, procedure names and procedure descriptions related to Aimp1
 #disease information is not included as no disease information is linked to Dkk2
-SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Dkk2'
+SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Dkk2'
 
 #this query gets information from every column in the tables, be careful as this does output duplicate ID columns as well. 
 #disease information is not included as no disease information is linked to Dkk2
-SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Dkk2'
+SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Dkk2'
 ```
 
 Dkk2 SQL queries into R dataframes
@@ -102,11 +102,11 @@ Dkk2 SQL queries into R dataframes
 #query the database for information related to gene 'Aimp1' and store the output as a dataframe
 #this query gets all analysis IDs, Pvalues, gene accession IDs, parameter names, parameter descriptions, parameter IDs, parameterOrigIDs, procedure names and procedure descriptions related to Aimp1
 #disease information is not included as no disease information is linked to Dkk2
-Dkk2_data = dbGetQuery(database1, "SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Dkk2'") 
+Dkk2_data = dbGetQuery(database1, "SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Dkk2'") 
 
 #this query gets information from every column in the tables, be careful as this does output duplicate ID columns as well. 
 #disease information is not included as no disease information is linked to Dkk2
-Dkk2_data = dbGetQuery(database1, "SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Dkk2'") 
+Dkk2_data = dbGetQuery(database1, "SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Dkk2'") 
 ```
 
 Fahd2a MySQL queries
@@ -114,11 +114,11 @@ Fahd2a MySQL queries
 ```{sql connection=}
 #this query gets all analysis IDs, Pvalues, gene accession IDs, parameter names, parameter descriptions, parameter IDs, parameterOrigIDs, procedure names and procedure descriptions related to Aimp1
 #disease information is not included as no disease information is linked to Fahd2a
-SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Fahd2a'
+SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Fahd2a'
 
 #this query gets information from every column in the tables, be careful as this does output duplicate ID columns as well. 
 #disease information is not included as no disease information is linked to Fahd2a
-SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Fahd2a'
+SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Fahd2a'
 ```
 
 Fahd2a SQL queries into R dataframes
@@ -127,9 +127,9 @@ Fahd2a SQL queries into R dataframes
 #query the database for information related to gene 'Aimp1' and store the output as a dataframe
 #this query gets all analysis IDs, Pvalues, gene accession IDs, parameter names, parameter descriptions, parameter IDs, parameterOrigIDs, procedure names and procedure descriptions related to Aimp1
 #disease information is not included as no disease information is linked to Fahd2a
-Fahd2a_data = dbGetQuery(database1, "SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Fahd2a'") 
+Fahd2a_data = dbGetQuery(database1, "SELECT Analysis.analysis_id,Analysis.pvalue,Genes.gene_accession_id,Genes.gene_symbol,Parameter.parameter_name,Parameter.parameter_group,Parameter.parameter_ID,impcParameterOrigId, parameter_description, procedure_name, procedure_description FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Fahd2a'") 
 
 #this query gets information from every column in the tables, be careful as this does output duplicate ID columns as well. 
 #disease information is not included as no disease information is linked to Fahd2a
-Fahd2a_data = dbGetQuery(database1, "SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN procedures ON procedures.procedure_id=parameter.procedure_id WHERE gene_symbol= 'Fahd2a'") 
+Fahd2a_data = dbGetQuery(database1, "SELECT * FROM Analysis INNER JOIN Genes ON Genes.gene_accession_id=Analysis.gene_accession_id INNER JOIN Parameter ON Parameter.parameter_id=Analysis.parameter_id INNER JOIN Procedures ON Procedures.procedure_id=Parameter.procedure_id WHERE gene_symbol= 'Fahd2a'") 
 ```
