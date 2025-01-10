@@ -220,7 +220,7 @@ server = function(input, output, session) {
       geom_polygon(data = plot_fig1, aes(x, y, group = id, fill=group_colour,
       # group = id refers to the plotting points for the circle vertices grouped by each individual data point
       # fill = group_colour refers to the colour filling being split by parameter group
-        text = paste("Paramter name:", parameter_name,"<br>Parameter group:", group,
+        text = paste("Parameter name:", parameter_name,"<br>Parameter group:", group,
                      "<br>Parameter ID:", parameter_id, "<br>p-value:", signif(p_value,3))),
       # text refers the hover-info text for the circles, showing parameter name, group, ID, and original p-value
       linewidth = plot_fig1$border_type,
@@ -234,6 +234,7 @@ server = function(input, output, session) {
       # labelling the points based on label value (group for top 8%, blank for rest),
       # size of text scaled by the pvalue
       theme_void() +
+      ggtitle("Parameter p-value Associations by Knockout Gene") +
       guides(size = guide_legend(title = "")) + # size title removed from legend, leaving just parameter group/colour
       coord_equal()
     
@@ -370,7 +371,7 @@ server = function(input, output, session) {
                 hoverinfo = "text"
                 ) %>%
       layout(
-        title = "UMAP Plot",
+        title = "Genes Plotted by UMAP of Parameter p-values",
         xaxis = list(title = "UMAP1"),
         yaxis = list(title = "UMAP2"))
   })
