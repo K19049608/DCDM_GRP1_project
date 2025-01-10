@@ -7,7 +7,7 @@ library(metap)
 library(packcircles)
 library(RMySQL)
 
-#connect to SQL database, unfortunately you will need to hard code your login details
+#connect to SQL database
 DCDM_project = dbConnect(RMySQL::MySQL(), dbname = 'database1', username = 'group1', password = 'FmBclv5T')
 
 # Load the data
