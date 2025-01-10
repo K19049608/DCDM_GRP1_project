@@ -25,8 +25,8 @@ Some basic commands to inspect the overall database are included
 #install.packages("RMariaDB") or install.packages("RMySQL")
 library(RMySQL)
 
-#connect to SQL database, unfortunately you will need to hard code your login details
-DCDM_project <- dbConnect(RMySQL::MySQL(), dbname = 'database1', username = 'your_username', password = 'your_password')
+#connect to SQL database
+DCDM_project <- dbConnect(RMySQL::MySQL(), dbname = 'database1', username = 'group1', password = 'FmBclv5T')
 
 #list all tables in the database
 dbListTables(database1)
